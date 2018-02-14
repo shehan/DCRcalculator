@@ -76,6 +76,7 @@ namespace DCRcalculator
                         var priorUserCommits = userCommits.Where(d => d.Date <= userCommit.Date).Count();
                         var totalPriorAppFiles = appCommits.Where(d => d.Date <= userCommit.Date).Sum(f => f.CommitFiles);
                         var totalPriorUserFiles = userCommits.Where(d => d.Date <= userCommit.Date).Sum(f => f.CommitFiles);
+                        var totalAppCommits = appCommits.Count();
 
                         authorDCR = new AuthorDCR();
                         authorDCR.App = app;
@@ -85,7 +86,8 @@ namespace DCRcalculator
                         authorDCR.AuthorCommits = priorUserCommits;
                         authorDCR.AuthorFiles = totalPriorUserFiles;
                         authorDCR.AppFiles = totalPriorAppFiles;
-                        authorDCR.Dcr = Convert.ToDouble(priorUserCommits) / Convert.ToDouble(priorAppCommits);
+                        authorDCR.Dcr_v1 = Convert.ToDouble(priorUserCommits) / Convert.ToDouble(priorAppCommits);
+                        authorDCR.Dcr_v2 = Convert.ToDouble(priorUserCommits) / Convert.ToDouble(totalAppCommits);
 
                         authorDCRList.Add(authorDCR);
                     }

@@ -31,7 +31,8 @@ namespace DCRcalculator
             "APP_CURRENT_COMMIT_COUNT REAL, " +
             "AUTHOR_CURRENT_FILES_COUNT REAL, " +
             "APP_CURRENT_FILES_COUNT REAL, " +
-            "AUTHOR_DCR REAL " +
+            "AUTHOR_DCR_v1 REAL, " +
+            "AUTHOR_DCR_v2 REAL " +
             ");";
 
             using (var dbConnection = new SQLiteConnection(connectionString))
@@ -54,8 +55,8 @@ namespace DCRcalculator
         public void BatchInsert(List<AuthorDCR> dcrList)
         {
             string query = "INSERT INTO DCR " +
-                                "(APP, COMMIT_SHA, AUTHOR_EMAIL, AUTHOR_CURRENT_COMMIT_COUNT, APP_CURRENT_COMMIT_COUNT, AUTHOR_CURRENT_FILES_COUNT, APP_CURRENT_FILES_COUNT, AUTHOR_DCR) " +
-                                "VALUES (@APP, @COMMIT_SHA, @AUTHOR_EMAIL, @AUTHOR_CURRENT_COMMIT_COUNT, @APP_CURRENT_COMMIT_COUNT, @AUTHOR_CURRENT_FILES_COUNT, @APP_CURRENT_FILES_COUNT, @AUTHOR_DCR);";
+                                "(APP, COMMIT_SHA, AUTHOR_EMAIL, AUTHOR_CURRENT_COMMIT_COUNT, APP_CURRENT_COMMIT_COUNT, AUTHOR_CURRENT_FILES_COUNT, APP_CURRENT_FILES_COUNT, AUTHOR_DCR_v1,AUTHOR_DCR_v2) " +
+                                "VALUES (@APP, @COMMIT_SHA, @AUTHOR_EMAIL, @AUTHOR_CURRENT_COMMIT_COUNT, @APP_CURRENT_COMMIT_COUNT, @AUTHOR_CURRENT_FILES_COUNT, @APP_CURRENT_FILES_COUNT, @AUTHOR_DCR_v1,@AUTHOR_DCR_v2);";
 
             using (var dbConnection = new SQLiteConnection(connectionString))
             {
@@ -73,7 +74,8 @@ namespace DCRcalculator
                             command.Parameters.AddWithValue("@APP_CURRENT_COMMIT_COUNT", dcrItem.AppCommits);
                             command.Parameters.AddWithValue("@AUTHOR_CURRENT_FILES_COUNT", dcrItem.AuthorFiles);
                             command.Parameters.AddWithValue("@APP_CURRENT_FILES_COUNT", dcrItem.AppFiles);
-                            command.Parameters.AddWithValue("@AUTHOR_DCR", dcrItem.Dcr);                        
+                            command.Parameters.AddWithValue("@AUTHOR_DCR_v1", dcrItem.Dcr_v1);
+                            command.Parameters.AddWithValue("@AUTHOR_DCR_v2", dcrItem.Dcr_v2);
 
                             command.CommandText = query;
                             command.ExecuteNonQuery();
